@@ -7,10 +7,99 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.matka.minesweeper.Welcome_Screen">
+    tools:context="Welcome_Screen"
+    android:background="@drawable/minefield_bg_image">
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:outlineProvider="bounds"
+        android:weightSum="1"
+        android:soundEffectsEnabled="true"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="274dp"
+            android:layout_height="wrap_content"
+            android:text="Let&apos;s Play!"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.33"
+            android:textColor="#cbcbd8"
+            android:textSize="50dp"
+            android:textColorHighlight="#3f3d3d"
+            android:textAlignment="center"
+            android:outlineProvider="bounds" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:text="EASY"
+            android:id="@+id/level1"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:drawableTint="#2f4091"
+            android:shadowColor="#7dbcd3"
+            android:textColor="#d4d0d0"
+            android:layout_marginTop="100dp"
+            android:textSize="25dp"
+            android:contextClickable="true"
+            android:clickable="true"
+            android:backgroundTintMode="src_over"
+            android:outlineProvider="paddedBounds"
+            android:layout_weight="0.33"
+            android:fadingEdge="horizontal"
+            android:autoText="true"
+            android:longClickable="true" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:text="Medium"
+            android:id="@+id/level2"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:drawableTint="#2f4091"
+            android:shadowColor="#7dbcd3"
+            android:layout_marginTop="30dp"
+            android:textColor="#d4d0d0"
+            android:textSize="25dp"
+            android:backgroundTintMode="src_over"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:fadingEdge="horizontal"
+            android:outlineProvider="paddedBounds"
+            android:layout_weight="0.33" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:text="Hard"
+            android:id="@+id/level3"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:drawableTint="#2f4091"
+            android:shadowColor="#7dbcd3"
+            android:layout_marginTop="30dp"
+            android:textColor="#d4d0d0"
+            android:textSize="25dp"
+            android:backgroundTintMode="src_over"
+            android:contextClickable="true"
+            android:clickable="true"
+            android:outlineProvider="paddedBounds"
+            android:padding="3dp"
+            android:layout_weight="0.33" />
+
+    </LinearLayout>
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/editText"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginStart="167dp" />
 </RelativeLayout>
