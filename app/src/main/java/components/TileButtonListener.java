@@ -1,9 +1,8 @@
 package components;
 
 /**
- * Created by matka on 03/12/16.
+ * Created by perrchick on 19/11/2016.
  */
 public interface TileButtonListener {
     void buttonClicked(TileButton tileButton);
 }
-

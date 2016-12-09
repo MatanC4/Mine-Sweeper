@@ -28,7 +28,7 @@
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.33"
-            android:textColor="#cbcbd8"
+            android:textColor="#676770"
             android:textSize="50dp"
             android:textColorHighlight="#3f3d3d"
             android:textAlignment="center"

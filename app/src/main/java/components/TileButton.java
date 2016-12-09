@@ -3,7 +3,6 @@ package components;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 
@@ -16,11 +15,15 @@ public class TileButton extends ImageButton implements View.OnClickListener {
 
     private int positionX;
     private int positionY;
+    private boolean isRevealed = false;
+    private boolean isFlagged = false;
     private int status = 0;
 
     public TileButton(Context context) {
         super(context);
         setOnClickListener(this);
+       // this.setMinimumWidth00);
+       // this.setMinimumHeight(30);
     }
 
     @Override
@@ -44,5 +47,22 @@ public class TileButton extends ImageButton implements View.OnClickListener {
     public int getPositionX() {
         return positionX;
     }
+
+    public boolean isRevealed(){
+        return isRevealed;
+    }
+
+    public void reavil() {
+        isRevealed = true;
+    }
+
+    public boolean isFlagged(){
+        return isFlagged;
+    }
+
+    public void setFlagged(boolean flag){
+        isFlagged = flag;
+    }
+
 }
 
