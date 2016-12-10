@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import bl.GameLogic;
+import bl.Level;
 import components.LevelButton;
 
 
@@ -52,42 +53,23 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()){
             case R.id.level1:
-                Intent intent = getLevelIntent("easy");
+                Intent intent = getLevelIntent(Level.easy);
                 startActivity(intent);
                 break;
             case R.id.level2:
-                Intent intent2 = getLevelIntent("medium");
+                Intent intent2 = getLevelIntent(Level.medium);
                 startActivity(intent2);
                 break;
             case R.id.level3:
-                Intent intent3 = getLevelIntent("hard");
+                Intent intent3 = getLevelIntent(Level.hard);
                 startActivity(intent3);
                 break;
         }
     }
 
-    private Intent getLevelIntent(String levelToIntent) {
-
+    private Intent getLevelIntent(Level levelToIntent) {
         Intent intent = new Intent(this, MineBoard.class);
-        try {
-            switch (levelToIntent){
-
-                case "easy":
-                    intent.putExtra("level","easy");
-
-                    break;
-                case "medium":
-                    intent.putExtra("level","medium");
-                    break;
-                case "hard":
-                    intent.putExtra("level","hard");
-                    break;
-            }
-
-        } catch (Exception e) {
-            Log.d("Error","error in passing level to intent method" + e);
-        }
+        intent.putExtra("level",levelToIntent.toString());
         return intent;
-
     }
 }
