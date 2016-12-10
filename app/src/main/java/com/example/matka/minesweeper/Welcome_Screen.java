@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import bl.GameLogic;
 import bl.Level;
 import components.LevelButton;
@@ -63,16 +65,19 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         easyBtn = (Button) findViewById(R.id.level1);
         easyBtn.setOnClickListener(this);
-        easyBtn.setText("Easy\nBest Time: " + (easyBS==0?"n/a":easyBS));
+        TextView txtvieweasy = (TextView)findViewById(R.id.easyLabel);
+        txtvieweasy.setText("Best Time: " + (easyBS==0?"n/a":easyBS+"s"));
 
         medBtn = (Button) findViewById(R.id.level2);
         medBtn.setOnClickListener(this);
-        medBtn.setText("Medium\nBest Time: " + (mediumBS==0?"n/a":mediumBS));
+        TextView txtviewmed = (TextView)findViewById(R.id.mediumLabel);
+        txtviewmed.setText("Best Time: " + (mediumBS==0?"n/a":mediumBS+"s"));
 
 
         hardBtn = (Button) findViewById(R.id.level3);
         hardBtn.setOnClickListener(this);
-        hardBtn.setText("Hard\nBest Time: " + (hardBS==0?"n/a":hardBS));
+        TextView txtviewhard = (TextView)findViewById(R.id.hardLabel);
+        txtviewhard.setText("Best Time: " + (hardBS==0?"n/a":hardBS+"s"));
     }
 
 
