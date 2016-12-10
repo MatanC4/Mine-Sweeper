@@ -23,6 +23,7 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
     private Button hardBtn;
     private Button startBtn;
     private int easyBS, mediumBS, hardBS;
+    Intent intent;
 
 
 
@@ -43,9 +44,14 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
     public void bindUI(){
 
-        Intent intent = new Intent(this,MineBoard.class);
+          intent = new Intent(this,MineBoard.class);
         startBtn = (Button) findViewById(R.id.play_btn);
-        
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        });
         
 
         easyBtn = (Button) findViewById(R.id.level1);
@@ -69,16 +75,16 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()){
             case R.id.level1:
-                Intent intent = getLevelIntent(Level.easy);
-                startActivity(intent);
+                intent.putExtra("level",Level.easy.toString());
+                startBtn.setText("START\n" + Level.easy.toString());
                 break;
             case R.id.level2:
-                Intent intent2 = getLevelIntent(Level.medium);
-                startActivity(intent2);
+                intent.putExtra("level",Level.medium.toString());
+                startBtn.setText("START\n" + Level.medium.toString());
                 break;
             case R.id.level3:
-                Intent intent3 = getLevelIntent(Level.hard);
-                startActivity(intent3);
+                intent.putExtra("level",Level.hard.toString());
+                startBtn.setText("START\n" + Level.hard.toString());
                 break;
         }
     }
