@@ -17,16 +17,12 @@ import com.example.matka.minesweeper.R;
 
 public class Welcome_Screen extends AppCompatActivity implements View.OnClickListener {
 
-
     private LevelButton [] levelButtons = new LevelButton [3];
     private Button easyBtn;
     private Button medBtn;
     private Button hardBtn;
     private Button startBtn;
     private int easyBS, mediumBS, hardBS;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +57,6 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
         hardBtn = (Button) findViewById(R.id.level3);
         hardBtn.setOnClickListener(this);
         hardBtn.setText("Hard\nBest Time: " + (hardBS==0?"n/a":hardBS));
-
-
-
-
     }
 
 
