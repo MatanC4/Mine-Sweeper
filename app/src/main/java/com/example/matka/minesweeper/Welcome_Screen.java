@@ -24,6 +24,8 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
     private Button startBtn;
     private int easyBS, mediumBS, hardBS;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         Intent intent = new Intent(this,MineBoard.class);
         startBtn = (Button) findViewById(R.id.play_btn);
+        
         
 
         easyBtn = (Button) findViewById(R.id.level1);

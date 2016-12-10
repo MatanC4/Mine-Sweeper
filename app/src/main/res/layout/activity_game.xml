@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/flagMode"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:src="@drawable/flag_white"
         android:background="@android:color/transparent"
         android:longClickable="true"
         android:clickable="true"
-        android:backgroundTint="#464444" />
+        android:backgroundTint="#464444"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView2" />
 
     <TextView
         android:text="Time: "

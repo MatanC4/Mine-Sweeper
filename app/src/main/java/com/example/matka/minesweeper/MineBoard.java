@@ -28,6 +28,7 @@ import bl.CellResult;
 import bl.GameEvent;
 import bl.GameListener;
 import bl.GameLogic;
+import bl.Level;
 import components.*;
 import timer.GameTimer;
 
@@ -50,7 +51,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        resultsMapping = initCellImagesMapping();
+        resultsMapping = initCellImagesMapping(getIntent().getStringExtra("level"));
         LinearLayout rowsLayout;
         LinearLayout colsLayout;
         gameLogic = initGameLogic(gameLogic);
@@ -60,7 +61,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         rowsLayout = new LinearLayout(this);
         rowsLayout.setBackgroundColor(Color.TRANSPARENT);
         rowsLayout.setOrientation(LinearLayout.VERTICAL);
-        rowsLayout.setPadding(0,150,0,0);
+        //rowsLayout.setPadding(0,50,2,0);
+
         rowsLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         for (int col = 0; col < gameLogic.getNumOfRows(); col++) {
@@ -76,7 +78,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
                 board[col][row].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
                 colsLayout.addView( board[col][row]);
                 if(level.equals("hard")) {
-                    board[col][row].setBackgroundResource(R.drawable.hard_empty_tile);
+                    board[col][row].setBackgroundResource(R.drawable.box_grey_hard);
                 }else{
                         board[col][row].setBackgroundResource(R.drawable.box_grey);
                 }
@@ -94,20 +96,33 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
     }
 
-    private HashMap<Integer,Integer> initCellImagesMapping() {
+    private HashMap<Integer,Integer> initCellImagesMapping(String level) {
         HashMap <Integer, Integer> resultsMapping = new HashMap<Integer , Integer>();
 
-        resultsMapping.put(0 , R.drawable.blank_tile);
-        resultsMapping.put(1 , R.drawable.digit_1);
-        resultsMapping.put(2 , R.drawable.digit_2);
-        resultsMapping.put(3 , R.drawable.digit_3);
-        resultsMapping.put(4 , R.drawable.digit_4);
-        resultsMapping.put(5 , R.drawable.digit_5);
-        resultsMapping.put(6 , R.drawable.digit_6);
-        resultsMapping.put(7 , R.drawable.digit_7);
-        resultsMapping.put(8 , R.drawable.digit_8);
-        resultsMapping.put(-1 ,R.drawable.mine_easy_hard);
-
+        if(level.equals(Level.hard.toString())){
+            resultsMapping.put(0, R.drawable.blank_tile_hard);
+            resultsMapping.put(1, R.drawable.digit_1_hard);
+            resultsMapping.put(2, R.drawable.digit_2_hard);
+            resultsMapping.put(3, R.drawable.digit_3_hard);
+            resultsMapping.put(4, R.drawable.digit_4_hard);
+            resultsMapping.put(5, R.drawable.digit_5_hard);
+            resultsMapping.put(6, R.drawable.digit_6_hard);
+            resultsMapping.put(7, R.drawable.digit_7_hard);
+            resultsMapping.put(8, R.drawable.digit_8_hard);
+            resultsMapping.put(-1, R.drawable.red_mine_hard);
+        }
+        else {
+            resultsMapping.put(0, R.drawable.blank_tile);
+            resultsMapping.put(1, R.drawable.digit_1);
+            resultsMapping.put(2, R.drawable.digit_2);
+            resultsMapping.put(3, R.drawable.digit_3);
+            resultsMapping.put(4, R.drawable.digit_4);
+            resultsMapping.put(5, R.drawable.digit_5);
+            resultsMapping.put(6, R.drawable.digit_6);
+            resultsMapping.put(7, R.drawable.digit_7);
+            resultsMapping.put(8, R.drawable.digit_8);
+            resultsMapping.put(-1, R.drawable.red_mine);
+        }
         return resultsMapping;
     }
 
