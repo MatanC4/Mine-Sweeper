@@ -25,25 +25,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import bl.CellResult;
+import bl.GameEvent;
+import bl.GameListener;
 import bl.GameLogic;
 import components.*;
 import timer.GameTimer;
 
-public class MineBoard extends AppCompatActivity implements TileButtonListener {
+
+public class MineBoard extends AppCompatActivity implements TileButtonListener , GameListener{
+
 
     private GameLogic gameLogic;
     private TableLayout tableLayout;
     private String level;
     ImageButton flag;
     TileButton [][] board;
-    private android.os.Handler handler;
-    private int counter = 0;
-    GameTimer timer;
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    private android.os.Handler handler , handlerDelayEndGame;
+    private int counter = 0 , counterDelay = 0;
+    GameTimer timer, timerDelayEndGame;
+    private HashMap <Integer, Integer> resultsMapping;
     private GoogleApiClient client;
 
     @Override
@@ -114,10 +114,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
             ArrayList<CellResult> results = gameLogic.click(tileButton.getPositionX(),tileButton.getPositionY());
             HashMap <Integer, Integer> resultsMapping = new HashMap<Integer , Integer>();
 
-            //debug
-            Toast toast = Toast.makeText(this, "pressed tile  " + tileButton.getPositionX() + "  " + tileButton.getPositionY() , Toast.LENGTH_LONG);
-            toast.show();
-            //debug
+
 
             resultsMapping.put(0 , R.drawable.blank_tile);
             resultsMapping.put(1 , R.drawable.digit_1);
@@ -136,10 +133,12 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
                 for(CellResult cell : results){
                     board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
                     // check is player lost
-                    if (cell.getValue() == -1){
+/*                    if (cell.getValue() == -1){
+                        // delay UI
+                        endOfGameDelay();
                         gameOver(0);
                         break;
-                    }
+                    }*/
                 }
             }catch (Exception e) {
                 Log.d("Error","" + e);
@@ -147,6 +146,20 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
         }
     }
 
+
+    public void endOfGameDelay(){
+
+        handlerDelayEndGame = new Handler(){
+            public void handleMessage (Message message){
+                if (counterDelay ==1)
+                    timerDelayEndGame.stopTimer();
+                counterDelay++;
+            }
+        };
+
+        timerDelayEndGame = new GameTimer(handlerDelayEndGame);
+        timerDelayEndGame.start();
+    }
 
     // currently only for losing state
     private void gameOver(int winner) {
@@ -158,6 +171,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
             intent.putExtra("status", "lose");
         }
         intent.putExtra("result",String.valueOf(counter));
+
         startActivity(intent);
     }
 
@@ -171,13 +185,13 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
                 switch (level) {
 
                     case "easy":
-                        gameLogic = new GameLogic(10, 10, 5);
+                        gameLogic = new GameLogic(10, 10, 5, this);
                         break;
                     case "medium":
-                        gameLogic = new GameLogic(10, 10, 10);
+                        gameLogic = new GameLogic(10, 10, 10, this);
                         break;
                     case "hard":
-                        gameLogic = new GameLogic(5, 5, 10);
+                        gameLogic = new GameLogic(5, 5, 10, this);
                         break;
                 }
 
@@ -189,6 +203,20 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
     }
 
     @Override
+    public void onGameEnd(GameEvent event) {
+        for(CellResult cell : event.getMines()){
+            board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
+        }
+        if(event.isWon()){
+
+        }
+        else{
+            endOfGameDelay();
+            gameOver(0);
+        }
+    }
+
+    //@Override
     /**public void onStart() {
         super.onStart();
 
@@ -209,7 +237,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
     }**/
 
    // @Override
-    public void onStop() {
+   /** public void onStop() {
         super.onStop();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -226,6 +254,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
-    }
+    }**/
 
 }
