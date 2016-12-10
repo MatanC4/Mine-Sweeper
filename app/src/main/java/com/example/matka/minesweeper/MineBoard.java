@@ -50,6 +50,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        resultsMapping = initCellImagesMapping();
         LinearLayout rowsLayout;
         LinearLayout colsLayout;
         gameLogic = initGameLogic(gameLogic);
@@ -93,6 +94,23 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
     }
 
+    private HashMap<Integer,Integer> initCellImagesMapping() {
+        HashMap <Integer, Integer> resultsMapping = new HashMap<Integer , Integer>();
+
+        resultsMapping.put(0 , R.drawable.blank_tile);
+        resultsMapping.put(1 , R.drawable.digit_1);
+        resultsMapping.put(2 , R.drawable.digit_2);
+        resultsMapping.put(3 , R.drawable.digit_3);
+        resultsMapping.put(4 , R.drawable.digit_4);
+        resultsMapping.put(5 , R.drawable.digit_5);
+        resultsMapping.put(6 , R.drawable.digit_6);
+        resultsMapping.put(7 , R.drawable.digit_7);
+        resultsMapping.put(8 , R.drawable.digit_8);
+        resultsMapping.put(-1 ,R.drawable.mine_easy_hard);
+
+        return resultsMapping;
+    }
+
     private void timerRun() {
         // Timer running
         handler = new Handler() {
@@ -112,24 +130,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
         if(!tileButton.isFlagged() && !tileButton.isRevealed()){
             ArrayList<CellResult> results = gameLogic.click(tileButton.getPositionX(),tileButton.getPositionY());
-            HashMap <Integer, Integer> resultsMapping = new HashMap<Integer , Integer>();
-
-
-
-            resultsMapping.put(0 , R.drawable.blank_tile);
-            resultsMapping.put(1 , R.drawable.digit_1);
-            resultsMapping.put(2 , R.drawable.digit_2);
-            resultsMapping.put(3 , R.drawable.digit_3);
-            resultsMapping.put(4 , R.drawable.digit_4);
-            resultsMapping.put(5 , R.drawable.digit_5);
-            resultsMapping.put(6 , R.drawable.digit_6);
-            resultsMapping.put(7 , R.drawable.digit_7);
-            resultsMapping.put(8 , R.drawable.digit_8);
-            resultsMapping.put(-1 ,R.drawable.mine_easy_hard);
-
             try {
-
-
                 for(CellResult cell : results){
                     board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
                     // check is player lost
@@ -208,7 +209,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
         }
         if(event.isWon()){
-
+            endOfGameDelay();
+            gameOver(1);
         }
         else{
             endOfGameDelay();

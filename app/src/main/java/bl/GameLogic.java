@@ -72,8 +72,8 @@ public class GameLogic {
 
     private ArrayList<CellResult> getMines() {
         ArrayList<CellResult> mines = new ArrayList<>();
-        for(int row = 0; row<= this.rows; row++)
-            for(int col = 0; col<=this.cols; col++)
+        for(int row = 0; row< this.rows; row++)
+            for(int col = 0; col<this.cols; col++)
                 if(this.board[row][col]==-1)
                     mines.add(new CellResult(row, col, MINE));
         return mines;

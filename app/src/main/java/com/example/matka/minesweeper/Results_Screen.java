@@ -2,6 +2,7 @@ package com.example.matka.minesweeper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class Results_Screen extends AppCompatActivity {
 
     private TextView title;
     private String winTitle = "Well done!";
+
     private ImageView smiley;
     private Button playAgainBtn;
     private String timer;
@@ -42,6 +44,9 @@ public class Results_Screen extends AppCompatActivity {
 
         if (getIntent().getStringExtra("status").equals("win")){
            title.setText(winTitle);
+            Drawable victorySmile = getResources().getDrawable(R.drawable.victory_smiley,getTheme());
+            smiley.setImageDrawable(victorySmile);
+
         }
 
         timer =  getIntent().getStringExtra("results");

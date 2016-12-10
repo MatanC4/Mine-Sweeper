@@ -20,6 +20,7 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
     Button easyBtn;
     Button medBtn;
     Button hardBtn;
+    Button startBtn;
 
 
 
@@ -35,6 +36,10 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
     public void bindUI(){
 
+        Intent intent = new Intent(this,MineBoard.class);
+        startBtn = (Button) findViewById(R.id.play_btn);
+        
+
         easyBtn = (Button) findViewById(R.id.level1);
         easyBtn.setOnClickListener(this);
 
@@ -43,6 +48,9 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         hardBtn = (Button) findViewById(R.id.level3);
         hardBtn.setOnClickListener(this);
+
+
+
 
     }
 

@@ -8,18 +8,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:outlineProvider="background">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="You lost.. it is sad"
+            android:text="YOU LOST.. IT IS SAD"
+            android:shadowColor="#0c0b0b"
             android:id="@+id/results_screen_title"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:textColor="#2f4059" />
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="28dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -31,13 +34,23 @@
             android:src="@drawable/sad_smiley" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:text="Play Again!"
             android:id="@+id/play_again_btn"
             android:layout_marginBottom="60dp"
+            android:background="@drawable/round_btn"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/results_screen_title"
+            android:layout_alignStart="@+id/results_screen_title" />
 
     </RelativeLayout>
 </LinearLayout>
