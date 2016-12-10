@@ -38,13 +38,14 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     private GameLogic gameLogic;
     private TableLayout tableLayout;
     private String level;
-    ImageButton flag;
-    TileButton [][] board;
+    private ImageButton flag;
+    private TileButton [][] board;
     private android.os.Handler handler , handlerDelayEndGame;
     private int counter = 0 , counterDelay = 0;
-    GameTimer timer, timerDelayEndGame;
+    private GameTimer timer, timerDelayEndGame;
     private HashMap <Integer, Integer> resultsMapping;
     private GoogleApiClient client;
+    private boolean isWon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         mainLayout.addView(rowsLayout);
         mainLayout.setGravity(Gravity.CENTER);
 
-       timerRun();
+        timerRun();
 
     }
 
@@ -148,12 +149,14 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     }
 
 
-    public void endOfGameDelay(){
-
+    public void endOfGameDelay(boolean isWon){
+        this.isWon = isWon;
         handlerDelayEndGame = new Handler(){
             public void handleMessage (Message message){
-                if (counterDelay ==1)
+                if (counterDelay > 0) {
                     timerDelayEndGame.stopTimer();
+                    gameOver();
+                }
                 counterDelay++;
             }
         };
@@ -163,10 +166,10 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     }
 
     // currently only for losing state
-    private void gameOver(int winner) {
+    private void gameOver() {
         timer.stopTimer();
         Intent intent = new Intent(this,Results_Screen.class);
-        if(winner == 1) {
+        if(this.isWon) {
             intent.putExtra("status", "win");
         }else{
             intent.putExtra("status", "lose");
@@ -208,14 +211,13 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         for(CellResult cell : event.getMines()){
             board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
         }
-        if(event.isWon()){
-            endOfGameDelay();
-            gameOver(1);
-        }
-        else{
-            endOfGameDelay();
-            gameOver(0);
-        }
+        endOfGameDelay(event.isWon());
+    }
+
+    @Override
+    public void onBackPressed(){
+        //Your code here
+        super.onBackPressed();
     }
 
     //@Override
