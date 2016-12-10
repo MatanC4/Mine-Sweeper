@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,6 +47,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     private HashMap <Integer, Integer> resultsMapping;
     private GoogleApiClient client;
     private boolean isWon;
+    private boolean flagMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         gameLogic = initGameLogic(gameLogic);
         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
-        flag = (ImageButton) findViewById(R.id.flagMode);
+
         rowsLayout = new LinearLayout(this);
         rowsLayout.setBackgroundColor(Color.TRANSPARENT);
         rowsLayout.setOrientation(LinearLayout.VERTICAL);
@@ -91,8 +93,25 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mainLayout.addView(rowsLayout);
         mainLayout.setGravity(Gravity.CENTER);
-
+        handleFlag();
         timerRun();
+
+    }
+
+    private void handleFlag() {
+        flag = (ImageButton) findViewById(R.id.flagMode);
+        flag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!flagMode){
+                    flag.setBackgroundResource(R.drawable.pressed_flag);
+                    flagMode = true;
+                }else{
+                    flag.setBackgroundResource(R.drawable.flag_white);
+                    flagMode = false;
+                }
+            }
+        });
 
     }
 
@@ -110,6 +129,9 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             resultsMapping.put(7, R.drawable.digit_7_hard);
             resultsMapping.put(8, R.drawable.digit_8_hard);
             resultsMapping.put(-1, R.drawable.red_mine_hard);
+            resultsMapping.put(10, R.drawable.red_flag_hard);
+            resultsMapping.put(11, R.drawable.box_grey_hard);
+
         }
         else {
             resultsMapping.put(0, R.drawable.blank_tile);
@@ -122,6 +144,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             resultsMapping.put(7, R.drawable.digit_7);
             resultsMapping.put(8, R.drawable.digit_8);
             resultsMapping.put(-1, R.drawable.red_mine);
+            resultsMapping.put(10, R.drawable.red_flag);
+            resultsMapping.put(11, R.drawable.box_grey);
         }
         return resultsMapping;
     }
@@ -142,7 +166,17 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     @Override
     public void buttonClicked(TileButton tileButton){
 
-        if(!tileButton.isFlagged() && !tileButton.isRevealed()){
+        if(flagMode) {
+            if (tileButton.isFlagged()) {
+                tileButton.setFlagged(false);
+                tileButton.setBackgroundResource(resultsMapping.get(11));
+            } else {
+                tileButton.setFlagged(true);
+                tileButton.setBackgroundResource(resultsMapping.get(10));
+            }
+        }
+
+        else if (!tileButton.isFlagged() && !tileButton.isRevealed()){
             ArrayList<CellResult> results = gameLogic.click(tileButton.getPositionX(),tileButton.getPositionY());
             try {
                 for(CellResult cell : results){
@@ -159,6 +193,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
                 Log.d("Error","" + e);
             }
         }
+
     }
 
 
