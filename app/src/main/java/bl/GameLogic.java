@@ -17,13 +17,15 @@ public class GameLogic {
 
     private int [][] board;
     private boolean [][] status;
+    private GameListener listener;
 
-    public GameLogic(int rows, int cols, int mines) {
+    public GameLogic(int rows, int cols, int mines, GameListener listener) {
         this.rows = rows;
         this.cols = cols;
         this.mines = mines;
         this.board = new int [rows][cols];
         this.status = new boolean[rows][cols];
+        this.listener = listener;
         resetBoard();
         resetStatus();
         paintMines();
@@ -48,6 +50,7 @@ public class GameLogic {
         if(this.board[row][col] == MINE){
             results.add(new CellResult(row, col, MINE));
             this.status[row][col] = true;
+            processEvent(false);
         }
         else if(this.board[row][col] > 0) {
             results.add(new CellResult(row, col, this.board[row][col]));
@@ -56,9 +59,24 @@ public class GameLogic {
         else{
             scanAfterClick(row, col, results);
         }
-
         this.openCells += results.size();
+        if(isWon())
+            processEvent(true);
         return results;
+    }
+
+    private void processEvent(boolean isWon ) {
+        ArrayList<CellResult> mines = getMines();
+        listener.onGameEnd(new GameEvent(isWon, mines));
+    }
+
+    private ArrayList<CellResult> getMines() {
+        ArrayList<CellResult> mines = new ArrayList<>();
+        for(int row = 0; row<= this.rows; row++)
+            for(int col = 0; col<=this.cols; col++)
+                if(this.board[row][col]==-1)
+                    mines.add(new CellResult(row, col, MINE));
+        return mines;
     }
 
     public boolean isWon(){
@@ -67,7 +85,6 @@ public class GameLogic {
 
     private void scanAfterClick(int row, int col, ArrayList<CellResult> results) {
         try {
-
             if (this.status[row][col] == false) {
                 Log.d("row/col", row + " " + col);
                 results.add(new CellResult(row, col, this.board[row][col]));
