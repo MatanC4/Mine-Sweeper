@@ -41,7 +41,6 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_welcome__screen);
         bindUI();
-
     }
 
 
@@ -52,7 +51,8 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intent);
+                if(!startBtn.getText().equals("START"))
+                    startActivity(intent);
             }
         });
         SharedPreferences lastPlayed = getApplicationContext().getSharedPreferences("last_game", 0);

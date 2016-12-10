@@ -63,7 +63,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         SharedPreferences.Editor editor = lastPlayed.edit();
         editor.putString("last_played", level);
         editor.apply();
-
         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
 
