@@ -65,7 +65,6 @@ public class GameLogic {
 
     private void scanAfterClick(int row, int col, ArrayList<CellResult> results){
         if(this.status[row][col]==false){
-            results.add(new CellResult(row, col, 0));
             results.add(new CellResult(row, col, this.board[row][col]));
             status[row][col] = true;
             if(this.board[row][col]==0){
@@ -106,7 +105,7 @@ public class GameLogic {
                     }
                     if(col==this.cols-1){
                         scanAfterClick(row-1,col-1,results);
-                        scanAfterClick(row-1,col+1, results);
+                        scanAfterClick(row-1,col, results);
                         scanAfterClick(row,col-1,results);
                     }
                     else{
