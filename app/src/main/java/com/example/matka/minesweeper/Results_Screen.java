@@ -77,7 +77,7 @@ public class Results_Screen extends AppCompatActivity {
     }
 
     private Intent anotherGameIntent() {
-      Intent intent  = new Intent(this,Welcome_Screen.class);
+        Intent intent  = new Intent(this,Welcome_Screen.class);
         return intent;
     }
 

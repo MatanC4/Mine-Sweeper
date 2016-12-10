@@ -22,18 +22,20 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
     private Button medBtn;
     private Button hardBtn;
     private Button startBtn;
+    private String lastLevel = null;
     private int easyBS, mediumBS, hardBS;
-    Intent intent;
+    private Intent intent;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("Scores", 0);
-        easyBS = sharedPref.getInt(Level.easy.toString(), 0);
-        mediumBS = sharedPref.getInt(Level.medium.toString(), 0);
-        hardBS = sharedPref.getInt(Level.hard.toString(), 0);
+        SharedPreferences scoresDB = getApplicationContext().getSharedPreferences("Scores", 0);
+
+        easyBS = scoresDB.getInt(Level.easy.toString(), 0);
+        mediumBS = scoresDB.getInt(Level.medium.toString(), 0);
+        hardBS = scoresDB.getInt(Level.hard.toString(), 0);
 
         setContentView(R.layout.activity_welcome__screen);
         bindUI();
@@ -43,8 +45,7 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
 
 
     public void bindUI(){
-
-          intent = new Intent(this,MineBoard.class);
+        intent = new Intent(this,MineBoard.class);
         startBtn = (Button) findViewById(R.id.play_btn);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,12 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
             }
         });
+        SharedPreferences lastPlayed = getApplicationContext().getSharedPreferences("last_game", 0);
+        lastLevel = lastPlayed.getString("last_played", "");
+        if(!lastLevel.equals("")){
+            intent.putExtra("level",lastLevel);
+            startBtn.setText("START\n" + lastLevel);
+        }
         
 
         easyBtn = (Button) findViewById(R.id.level1);

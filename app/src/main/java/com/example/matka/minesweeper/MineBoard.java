@@ -1,6 +1,7 @@
 package com.example.matka.minesweeper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -55,6 +56,12 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         LinearLayout rowsLayout;
         LinearLayout colsLayout;
         gameLogic = initGameLogic(gameLogic);
+
+        SharedPreferences lastPlayed = getApplicationContext().getSharedPreferences("last_game", 0);
+        SharedPreferences.Editor editor = lastPlayed.edit();
+        editor.putString("last_played", level);
+        editor.apply();
+
         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
         flag = (ImageButton) findViewById(R.id.flagMode);
