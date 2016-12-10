@@ -34,7 +34,6 @@ import timer.GameTimer;
 
 public class MineBoard extends AppCompatActivity implements TileButtonListener , GameListener{
 
-
     private GameLogic gameLogic;
     private TableLayout tableLayout;
     private String level;
@@ -55,10 +54,10 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         LinearLayout rowsLayout;
         LinearLayout colsLayout;
         gameLogic = initGameLogic(gameLogic);
-         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
+        board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
         flag = (ImageButton) findViewById(R.id.flagMode);
-         rowsLayout = new LinearLayout(this);
+        rowsLayout = new LinearLayout(this);
         rowsLayout.setBackgroundColor(Color.TRANSPARENT);
         rowsLayout.setOrientation(LinearLayout.VERTICAL);
         rowsLayout.setPadding(0,150,0,0);
@@ -125,7 +124,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
          timer.start();
     }
 
-
     @Override
     public void buttonClicked(TileButton tileButton){
 
@@ -175,6 +173,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             intent.putExtra("status", "lose");
         }
         intent.putExtra("result",String.valueOf(counter));
+        intent.putExtra("level", level);
 
         startActivity(intent);
     }
@@ -216,8 +215,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
     @Override
     public void onBackPressed(){
-        //Your code here
         super.onBackPressed();
+        finish();
     }
 
     //@Override
