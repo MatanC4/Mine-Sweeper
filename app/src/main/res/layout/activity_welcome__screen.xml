@@ -55,7 +55,7 @@
             android:autoText="false"
             android:longClickable="true"
             android:textStyle="bold"
-            android:backgroundTint="#a2618798" />
+            android:backgroundTint="#cb618798" />
 
         <TextView
             android:layout_width="match_parent"
@@ -89,7 +89,7 @@
             android:outlineProvider="paddedBounds"
             android:layout_weight="0.16"
             android:textStyle="bold"
-            android:backgroundTint="#a2618798" />
+            android:backgroundTint="#c0618798" />
 
         <TextView
             android:layout_width="match_parent"
