@@ -3,8 +3,6 @@ package com.example.matka.minesweeper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +14,8 @@ import android.widget.RelativeLayout;
 import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Handler;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
@@ -186,7 +181,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             try {
                 for(CellResult cell : results){
                     board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
-                    board[cell.getCol()][cell.getRow()].reavil();
+                    board[cell.getCol()][cell.getRow()].reveal();
                 }
             }catch (Exception e) {
                 Log.d("Error","" + e);
@@ -223,6 +218,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         intent.putExtra("result",String.valueOf(counter));
         intent.putExtra("level", level);
         startActivity(intent);
+        finish();
+
     }
 
 
@@ -264,47 +261,5 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        finish();
     }
-
-    //@Override
-    /**public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "MineBoard Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.matka.minesweeper/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }**/
-
-   // @Override
-   /** public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "MineBoard Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.matka.minesweeper/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }**/
-
 }

@@ -53,7 +53,7 @@ public class TileButton extends ImageButton implements View.OnClickListener {
         return isRevealed;
     }
 
-    public void reavil() {
+    public void reveal() {
         isRevealed = true;
     }
 
