@@ -65,7 +65,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         editor.apply();
         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
-
         rowsLayout = new LinearLayout(this);
         rowsLayout.setBackgroundColor(Color.TRANSPARENT);
         rowsLayout.setOrientation(LinearLayout.VERTICAL);
@@ -187,13 +186,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
             try {
                 for(CellResult cell : results){
                     board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
-                    // check is player lost
-/*                    if (cell.getValue() == -1){
-                        // delay UI
-                        endOfGameDelay();
-                        gameOver(0);
-                        break;
-                    }*/
+                    board[cell.getCol()][cell.getRow()].reavil();
                 }
             }catch (Exception e) {
                 Log.d("Error","" + e);
@@ -221,7 +214,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
     // currently only for losing state
     private void gameOver() {
-        timer.stopTimer();
         Intent intent = new Intent(this,Results_Screen.class);
         if(this.isWon) {
             intent.putExtra("status", "win");
@@ -230,7 +222,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         }
         intent.putExtra("result",String.valueOf(counter));
         intent.putExtra("level", level);
-
         startActivity(intent);
     }
 
@@ -263,6 +254,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
 
     @Override
     public void onGameEnd(GameEvent event) {
+        timer.stopTimer();
         for(CellResult cell : event.getMines()){
             board[cell.getCol()][cell.getRow()].setBackgroundResource(resultsMapping.get(cell.getValue()));
         }
