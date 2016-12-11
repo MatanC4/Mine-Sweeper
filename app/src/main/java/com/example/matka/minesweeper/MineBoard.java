@@ -161,7 +161,8 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         handler = new Handler() {
             public void handleMessage (Message message){
                 TextView time = (TextView)findViewById(R.id.textView2);
-                time.setText("Time: " + String.valueOf(Math.round(counter)));
+                //time.setText("Time: " + String.valueOf(Math.round(counter)));
+                time.setText("Time: " + (counter/60<10?"0":"")+String.valueOf(Math.round(counter)/60)+":"+(counter%60<10?"0":"")+counter%60);
                 counter++;
             }
         };

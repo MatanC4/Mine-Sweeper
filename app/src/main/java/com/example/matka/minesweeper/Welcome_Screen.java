@@ -3,6 +3,7 @@ package com.example.matka.minesweeper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
         if(!lastLevel.equals("")){
             intent.putExtra("level",lastLevel);
             startBtn.setText("START\n" + lastLevel);
+
+
         }
         
 
@@ -89,14 +92,18 @@ public class Welcome_Screen extends AppCompatActivity implements View.OnClickLis
             case R.id.level1:
                 intent.putExtra("level",Level.easy.toString());
                 startBtn.setText("START\n" + Level.easy.toString());
+                startBtn.setTextColor(Color.parseColor("#D7FF33"));
+
                 break;
             case R.id.level2:
                 intent.putExtra("level",Level.medium.toString());
                 startBtn.setText("START\n" + Level.medium.toString());
+                startBtn.setTextColor(Color.parseColor("#FFA500"));
                 break;
             case R.id.level3:
                 intent.putExtra("level",Level.hard.toString());
                 startBtn.setText("START\n" + Level.hard.toString());
+                startBtn.setTextColor(Color.parseColor("#FF3333"));
                 break;
         }
     }
