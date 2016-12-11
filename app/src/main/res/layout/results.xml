@@ -52,5 +52,14 @@
             android:layout_below="@+id/results_screen_title"
             android:layout_alignStart="@+id/results_screen_title" />
 
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp"
+            android:id="@+id/textViewTime" />
+
     </RelativeLayout>
 </LinearLayout>

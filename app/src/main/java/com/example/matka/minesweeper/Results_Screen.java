@@ -52,6 +52,8 @@ public class Results_Screen extends AppCompatActivity {
             String level = getIntent().getStringExtra("level");
             int bestScore = sharedPref.getInt(level, 0);
             int result  = Integer.parseInt(getIntent().getStringExtra("result"));
+            TextView finalTime = (TextView)findViewById(R.id.textViewTime);
+            finalTime.setText("Your Time: " + (result/60<10?"0":"")+result/60+":"+(result%60<10?"0":"")+result%60);
             if(result<bestScore || bestScore==0){
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(level, result);
