@@ -44,34 +44,36 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
     private GoogleApiClient client;
     private boolean isWon;
     private boolean flagMode = false;
+    private LinearLayout rowsLayout;
+    private LinearLayout colsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         resultsMapping = initCellImagesMapping(getIntent().getStringExtra("level"));
-        LinearLayout rowsLayout;
-        LinearLayout colsLayout;
         gameLogic = initGameLogic(gameLogic);
+        saveCurrentLevel();
+        buildBoard();
+        handleFlag();
+        timerRun();
 
-        SharedPreferences lastPlayed = getApplicationContext().getSharedPreferences("last_game", 0);
-        SharedPreferences.Editor editor = lastPlayed.edit();
-        editor.putString("last_played", level);
-        editor.apply();
+    }
+
+    private void buildBoard() {
         board = new TileButton[gameLogic.getNumOfRows()][gameLogic.getNumOfCols()];
 
         rowsLayout = new LinearLayout(this);
         rowsLayout.setBackgroundColor(Color.TRANSPARENT);
         rowsLayout.setOrientation(LinearLayout.VERTICAL);
-        //rowsLayout.setPadding(0,50,2,0);
 
         rowsLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         for (int col = 0; col < gameLogic.getNumOfRows(); col++) {
-             colsLayout = new LinearLayout(this);
+            colsLayout = new LinearLayout(this);
             colsLayout.setBackgroundColor(Color.TRANSPARENT);
             colsLayout.setOrientation(LinearLayout.HORIZONTAL);
-            //colsLayout.setPadding(5,5,5,5);
+
             colsLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             for (int row = 0; row < gameLogic.getNumOfCols(); row++) {
                 board[col][row]  = new TileButton(this);
@@ -82,7 +84,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
                 if(level.equals("hard")) {
                     board[col][row].setBackgroundResource(R.drawable.box_grey_hard);
                 }else{
-                        board[col][row].setBackgroundResource(R.drawable.box_grey);
+                    board[col][row].setBackgroundResource(R.drawable.box_grey);
                 }
             }
             rowsLayout.addView(colsLayout);
@@ -93,9 +95,13 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mainLayout.addView(rowsLayout);
         mainLayout.setGravity(Gravity.CENTER);
-        handleFlag();
-        timerRun();
+    }
 
+    private void saveCurrentLevel() {
+        SharedPreferences lastPlayed = getApplicationContext().getSharedPreferences("last_game", 0);
+        SharedPreferences.Editor editor = lastPlayed.edit();
+        editor.putString("last_played", level);
+        editor.apply();
     }
 
     private void handleFlag() {
@@ -207,7 +213,7 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         timerDelayEndGame.start();
     }
 
-    // currently only for losing state
+
     private void gameOver() {
         Intent intent = new Intent(this,Results_Screen.class);
         if(this.isWon) {
@@ -219,7 +225,6 @@ public class MineBoard extends AppCompatActivity implements TileButtonListener ,
         intent.putExtra("level", level);
         startActivity(intent);
         finish();
-
     }
 
 

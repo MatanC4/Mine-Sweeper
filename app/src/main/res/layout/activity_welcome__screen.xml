@@ -55,7 +55,7 @@
             android:autoText="false"
             android:longClickable="true"
             android:textStyle="bold"
-            android:backgroundTint="#cb618798" />
+            android:backgroundTint="#ec517281" />
 
         <TextView
             android:layout_width="match_parent"

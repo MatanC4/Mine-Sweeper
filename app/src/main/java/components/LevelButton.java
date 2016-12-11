@@ -10,12 +10,12 @@ import android.view.View;
  */
 public class LevelButton extends Button implements View.OnClickListener {
 
-    int rows ,cols, mines;
+    int rows, cols, mines;
     Button button;
     private LevelButtonListener listener;
 
 
-    public LevelButton(Context context){
+    public LevelButton(Context context) {
         super(context);
         setOnClickListener(this);
     }
@@ -29,15 +29,14 @@ public class LevelButton extends Button implements View.OnClickListener {
     }
 
 
-    public LevelButton(Context context ,int rows ,int cols,int mines){
+    public LevelButton(Context context, int rows, int cols, int mines) {
         super(context);
-        setLevel(rows, cols ,mines);
+        setLevel(rows, cols, mines);
         setOnClickListener(this);
     }
 
 
-
-    public void setLevel(int rows ,int cols, int mines){
+    public void setLevel(int rows, int cols, int mines) {
         this.rows = rows;
         this.cols = cols;
         this.mines = mines;

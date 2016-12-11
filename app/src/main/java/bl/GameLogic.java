@@ -52,16 +52,18 @@ public class GameLogic {
             this.status[row][col] = true;
             processEvent(false);
         }
-        else if(this.board[row][col] > 0) {
-            results.add(new CellResult(row, col, this.board[row][col]));
-            this.status[row][col] = true;
-        }
         else{
-            scanAfterClick(row, col, results);
+            if(this.board[row][col] > 0) {
+                results.add(new CellResult(row, col, this.board[row][col]));
+                this.status[row][col] = true;
+            }
+            else{
+                scanAfterClick(row, col, results);
+            }
+            this.openCells += results.size();
+            if(isWon())
+                processEvent(true);
         }
-        this.openCells += results.size();
-        if(isWon())
-            processEvent(true);
         return results;
     }
 
@@ -90,6 +92,7 @@ public class GameLogic {
                 results.add(new CellResult(row, col, this.board[row][col]));
                 status[row][col] = true;
                 if (this.board[row][col] == 0) {
+                    // center of board
                     if (row > 0 && col > 0 && row < this.rows - 1 && col < this.cols - 1) {
                         scanAfterClick(row - 1, col - 1, results);
                         scanAfterClick(row - 1, col, results);
@@ -99,17 +102,22 @@ public class GameLogic {
                         scanAfterClick(row + 1, col - 1, results);
                         scanAfterClick(row + 1, col, results);
                         scanAfterClick(row + 1, col + 1, results);
+
                     } else if (row == 0) {
+                        // upper left corner
                         if (col == 0) {
                             scanAfterClick(row, col + 1, results);
                             scanAfterClick(row + 1, col, results);
                             scanAfterClick(row + 1, col + 1, results);
                         }
+                        //upper right corner
                         else if (col == this.cols - 1) {
                             scanAfterClick(row, col - 1, results);
                             scanAfterClick(row + 1, col - 1, results);
                             scanAfterClick(row + 1, col, results);
-                        } else {
+                        }
+                        // uuper row not including edges
+                        else {
                             scanAfterClick(row, col - 1, results);
                             scanAfterClick(row, col + 1, results);
                             scanAfterClick(row + 1, col - 1, results);
@@ -136,12 +144,14 @@ public class GameLogic {
                             scanAfterClick(row, col - 1, results);
                             scanAfterClick(row, col + 1, results);
                         }
+                        //left col not including edges
                     } else if (col == 0) {
                         scanAfterClick(row - 1, col, results);
                         scanAfterClick(row - 1, col + 1, results);
                         scanAfterClick(row, col + 1, results);
                         scanAfterClick(row + 1, col, results);
                         scanAfterClick(row + 1, col + 1, results);
+                        //right col not including edges
                     } else if (col == this.cols - 1) {
                         scanAfterClick(row - 1, col - 1, results);
                         scanAfterClick(row - 1, col, results);

@@ -23,8 +23,6 @@ public class TileButton extends ImageButton implements View.OnClickListener {
     public TileButton(Context context) {
         super(context);
         setOnClickListener(this);
-       // this.setMinimumWidth00);
-       // this.setMinimumHeight(30);
     }
 
     @Override

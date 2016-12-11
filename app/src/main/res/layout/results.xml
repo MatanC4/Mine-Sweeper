@@ -53,13 +53,13 @@
             android:layout_alignStart="@+id/results_screen_title" />
 
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"
-            android:id="@+id/textViewTime" />
+            android:id="@+id/textViewTime"
+            android:layout_below="@+id/textView3"
+            android:textSize="40dp"
+            android:textColor="#d6f5f9f4" />
 
     </RelativeLayout>
 </LinearLayout>
