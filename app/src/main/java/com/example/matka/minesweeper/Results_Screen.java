@@ -69,6 +69,7 @@ public class Results_Screen extends AppCompatActivity {
                 Intent intent = anotherGameIntent();
                 intent.putExtra("result", timer);
                 startActivity(intent);
+                finish();
             }
 
 

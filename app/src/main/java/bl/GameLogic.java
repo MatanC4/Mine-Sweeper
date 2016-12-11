@@ -169,41 +169,41 @@ public class GameLogic {
     }
 
     private void scanAndPaintBoard() {
-        for(int i = 0; i < this.rows; i++){
-            for(int j = 0; j < this.cols; j++){
+        for(int row = 0; row < this.rows; row++){
+            for(int col = 0; col < this.cols; col++){
                 int count = 0;
-                if(this.board[i][j] != MINE){
-                    if(i>0 && i<this.rows-1 && j>0 && j<this.cols-1)
-                        count = Math.min(this.board[i][j-1],0) +  Math.min(this.board[i][j+1],0) +  Math.min(this.board[i+1][j-1],0) +
-                                Math.min(this.board[i+1][j],0) +  Math.min(this.board[i+1][j+1],0) +  Math.min(this.board[i-1][j-1],0) +
-                                Math.min(this.board[i-1][j],0) +  Math.min(this.board[i-1][j+1],0);
-                    else if(i==0){
-                        if(j==0)
-                            count =  Math.min(this.board[i][j+1],0) +  Math.min(this.board[i+1][j],0) +  Math.min(this.board[i+1][j+1],0);
-                        else if (j == this.cols-1)
-                            count =  Math.min(this.board[i][j-1],0) +  Math.min(this.board[i+1][j-1],0) +  Math.min(this.board[i+1][j],0);
+                if(this.board[row][col] != MINE){
+                    if(row>0 && row<this.rows-1 && col>0 && col<this.cols-1)
+                        count = Math.min(this.board[row][col-1],0) +  Math.min(this.board[row][col+1],0) +  Math.min(this.board[row+1][col-1],0) +
+                                Math.min(this.board[row+1][col],0) +  Math.min(this.board[row+1][col+1],0) +  Math.min(this.board[row-1][col-1],0) +
+                                Math.min(this.board[row-1][col],0) +  Math.min(this.board[row-1][col+1],0);
+                    else if(row==0){
+                        if(col==0)
+                            count =  Math.min(this.board[row][col+1],0) +  Math.min(this.board[row+1][col],0) +  Math.min(this.board[row+1][col+1],0);
+                        else if (col == this.cols-1)
+                            count =  Math.min(this.board[row][col-1],0) +  Math.min(this.board[row+1][col-1],0) +  Math.min(this.board[row+1][col],0);
                         else
-                            count =  Math.min(this.board[i][j-1],0) +  Math.min(this.board[i][j+1],0) +  Math.min(this.board[i+1][j-1],0) +
-                                    Math.min(this.board[i+1][j],0) +  Math.min(this.board[i+1][j+1],0);
+                            count =  Math.min(this.board[row][col-1],0) +  Math.min(this.board[row][col+1],0) +  Math.min(this.board[row+1][col-1],0) +
+                                    Math.min(this.board[row+1][col],0) +  Math.min(this.board[row+1][col+1],0);
                     }
-                    else if(i==this.rows-1){
-                        if(j==0)
-                            count =  Math.min(this.board[i][j+1],0) +  Math.min(this.board[i-1][j],0) + Math.min(this.board[i-1][j+1],0);
-                        else if(j==this.cols-1)
-                            count = Math.min(this.board[i][j-1],0) + Math.min(this.board[i-1][j],0) + Math.min(this.board[i-1][j],0);
+                    else if(row==this.rows-1){
+                        if(col==0)
+                            count =  Math.min(this.board[row][col+1],0) +  Math.min(this.board[row-1][col],0) + Math.min(this.board[row-1][col+1],0);
+                        else if(col==this.cols-1)
+                            count = Math.min(this.board[row][col-1],0) + Math.min(this.board[row-1][col],0) + Math.min(this.board[row-1][col-1],0);
                         else
-                            count = Math.min(this.board[i][j-1],0) + Math.min(this.board[i][j+1],0) + Math.min(this.board[i-1][j-1],0) +
-                                    Math.min(this.board[i-1][j],0) + Math.min(this.board[i-1][j+1],0);
+                            count = Math.min(this.board[row][col-1],0) + Math.min(this.board[row][col+1],0) + Math.min(this.board[row-1][col-1],0) +
+                                    Math.min(this.board[row-1][col],0) + Math.min(this.board[row-1][col+1],0);
                     }
                     else{
-                        if(j==0)
-                            count = Math.min(this.board[i-1][j],0) + Math.min(this.board[i-1][j+1],0) + Math.min(this.board[i][j+1],0) +
-                                    Math.min(this.board[i+1][j],0) + Math.min(this.board[i+1][j+1],0);
-                        else if(j==this.cols-1)
-                            count = Math.min(this.board[i-1][j],0) + Math.min(this.board[i-1][j-1],0) + Math.min(this.board[i][j-1],0) +
-                                    Math.min(this.board[i+1][j],0) + Math.min(this.board[i+1][j-1],0);
+                        if(col==0)
+                            count = Math.min(this.board[row-1][col],0) + Math.min(this.board[row-1][col+1],0) + Math.min(this.board[row][col+1],0) +
+                                    Math.min(this.board[row+1][col],0) + Math.min(this.board[row+1][col+1],0);
+                        else if(col==this.cols-1)
+                            count = Math.min(this.board[row-1][col],0) + Math.min(this.board[row-1][col-1],0) + Math.min(this.board[row][col-1],0) +
+                                    Math.min(this.board[row+1][col],0) + Math.min(this.board[row+1][col-1],0);
                     }
-                    this.board[i][j] = -count;
+                    this.board[row][col] = -count;
                 }
             }
         }
