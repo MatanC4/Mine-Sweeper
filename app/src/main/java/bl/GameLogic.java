@@ -44,6 +44,65 @@ public class GameLogic {
                 this.board[i][j] = 0;
     }
 
+    public ArrayList<CellResult> addMime(){
+        ArrayList<CellResult> results = new ArrayList<>();
+        while(results.size()==0){
+            CellResult result = tossMine();
+            if(result!=null) {
+                results.add(result);
+                if(this.status[result.getRow()][result.getCol()]){
+                    this.status[result.getRow()][result.getCol()] = false;
+                    openCells--;
+                }
+            }
+        }
+        this.mines++;
+        scanAfterAddedMine(results);
+        return results;
+    }
+
+    private void scanAfterAddedMine(ArrayList<CellResult> results) {
+        CellResult mine = results.get(0);
+        if(mine.getRow()>0)
+            scanAbove(mine,results);
+        if(mine.getRow()<this.cols-1)
+            scanUnder(mine,results);
+        scanCurrent(mine,results);
+    }
+
+    private void scanCurrent(CellResult mine, ArrayList<CellResult> results) {
+        if(mine.getCol()>0)
+            addOneIfNotMine(mine.getRow(),mine.getCol()-1, results);
+        if(mine.getCol()<this.rows-1)
+            addOneIfNotMine(mine.getRow(),mine.getCol()+1, results);
+    }
+
+    private void scanUnder(CellResult mine, ArrayList<CellResult> results) {
+        if(mine.getCol()>0)
+            addOneIfNotMine(mine.getRow()-1,mine.getCol()-1, results);
+        if(mine.getCol()<this.rows-1)
+            addOneIfNotMine(mine.getRow()-1,mine.getCol()+1, results);
+        addOneIfNotMine(mine.getRow()-1,mine.getCol(), results);
+    }
+
+    private void scanAbove(CellResult mine, ArrayList<CellResult> results){
+        if(mine.getCol()>0)
+            addOneIfNotMine(mine.getRow()+1,mine.getCol()-1, results);
+        if(mine.getCol()<this.rows-1)
+            addOneIfNotMine(mine.getRow()+1,mine.getCol()+1, results);
+        addOneIfNotMine(mine.getRow()+1,mine.getCol(), results);
+    }
+
+
+    private void addOneIfNotMine(int row, int col, ArrayList<CellResult> results) {
+        if(board[row][col] != MINE){
+            board[row][col]++;
+            if(status[row][col])
+                results.add(new CellResult(row, col, board[row][col]));
+        }
+    }
+
+
 
     public ArrayList<CellResult> click(int row, int col){
         ArrayList<CellResult> results = new ArrayList<>();
@@ -66,6 +125,8 @@ public class GameLogic {
         }
         return results;
     }
+
+
 
     private void processEvent(boolean isWon ) {
         ArrayList<CellResult> mines = getMines();
@@ -165,17 +226,24 @@ public class GameLogic {
         catch(Exception e){}
     }
 
-
     private void paintMines() {
         int count = 0;
         while(count < this.mines){
             int row = (int)(Math.random()*this.rows);
             int col = (int)(Math.random()*this.cols);
-            if(board[row][col] != MINE){
-                board[row][col] = MINE;
+            if(tossMine()!= null)
                 count += 1;
-            }
         }
+    }
+
+    private CellResult tossMine(){
+        int row = (int)(Math.random()*this.rows);
+        int col = (int)(Math.random()*this.cols);
+        if(board[row][col] != MINE){
+            board[row][col] = MINE;
+            return new CellResult(row, col, MINE);
+        }
+        return null;
     }
 
     private void scanAndPaintBoard() {
